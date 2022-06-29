@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="BoomerangCard.Forms.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    BackgroundColor="Black">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="BoxView">
+                <Setter Property="WidthRequest" Value="210" />
+                <Setter Property="HeightRequest" Value="140" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="BackgroundColor" Value="#f3f3f3" />
+            </Style>
+            <Style TargetType="Slider">
+                <Setter Property="BackgroundColor" Value="AliceBlue" />
+                <Setter Property="MaximumTrackColor" Value="Gray" />
+                <Setter Property="MinimumTrackColor" Value="DeepPink" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
+        <Grid
+            x:Name="gridbox"
+            Margin="10,40"
+            VerticalOptions="EndAndExpand">
+            <Grid
+                x:Name="card2"
+                Margin="0,0,0,20"
+                Scale="0.95">
+                <Grid.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated" />
+                </Grid.GestureRecognizers>
+                <BoxView Margin="0,0,0,0" BackgroundColor="#e5cd84" />
+                <BoxView
+                    WidthRequest="32"
+                    HeightRequest="32"
+                    Margin="0,60,120,0"
+                    CornerRadius="16" />
+                <BoxView
+                    WidthRequest="80"
+                    HeightRequest="12"
+                    Margin="0,40,0,0"
+                    CornerRadius="6" />
+                <BoxView
+                    WidthRequest="50"
+                    HeightRequest="12"
+                    Margin="0,80,30,0"
+                    CornerRadius="6" />
+            </Grid>
+
+            <Grid x:Name="card1">
+                <Grid.GestureRecognizers>
+                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated" />
+                </Grid.GestureRecognizers>
+                <BoxView Margin="0,0,0,0" BackgroundColor="#a8c7ff" />
+
+                <BoxView
+                    WidthRequest="32"
+                    HeightRequest="32"
+                    Margin="0,60,120,0"
+                    CornerRadius="16" />
+                <BoxView
+                    WidthRequest="80"
+                    HeightRequest="12"
+                    Margin="0,40,0,0"
+                    CornerRadius="6" />
+                <BoxView
+                    WidthRequest="50"
+                    HeightRequest="12"
+                    Margin="0,80,30,0"
+                    CornerRadius="6" />
+            </Grid>
+        </Grid>
+
+        <Grid
+            WidthRequest="300"
+            Padding="40,10"
+            HorizontalOptions="FillAndExpand"
+            BackgroundColor="White"
+            ColumnDefinitions="Auto, Auto, *"
+            RowDefinitions="Auto, Auto, Auto">
+            <Label Grid.Column="0" Text="Spins:" />
+            <Label
+                Grid.Column="1"
+                WidthRequest="40"
+                Text="{Binding Source={x:Reference Spinslider}, Path=Value}" />
+            <Slider
+                x:Name="Spinslider"
+                Grid.Column="2"
+                Maximum="10"
+                Minimum="1"
+                Value="{Binding AniSpins, Mode=TwoWay}"
+                ValueChanged="Spinslider_ValueChanged" />
+
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                Text="Height:" />
+            <Slider
+                x:Name="Heightslider"
+                Grid.Row="1"
+                Grid.Column="2"
+                Maximum="400"
+                Minimum="100"
+                Value="{Binding AniHeight}" />
+            <Label
+                Grid.Row="1"
+                Grid.Column="1"
+                Text="{Binding Source={x:Reference Heightslider}, Path=Value}" />
+
+            <StackLayout Grid.Row="2" Grid.ColumnSpan="3">
+                <Label x:Name="LabelStatus" Text="Status:" />
+                <Label x:Name="LabelY" Text="Movement:" />
+                <!--<Label x:Name="Labelx" Text="Position X:" />
+                <Label x:Name="Labely" Text="Position Y:" />-->
+                <Button Text="Fly" Clicked="Button_Clicked" />
+            </StackLayout>
+        </Grid>
+    </StackLayout>
+</ContentPage>
