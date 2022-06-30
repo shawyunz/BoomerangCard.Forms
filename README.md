@@ -10,19 +10,19 @@ A [flutter demo from @Roaa94](https://github.com/Roaa94/flutter_cool_card_swiper
 
 
 <p align="center">
-	<img align="center" src=".\demo\v1.gif" width="340" />
+	<img align="center" src=".\demo\v3.gif" width="340" />
 </p>
 
 
 
 ## Tasks / Features
 
-- [ ] Cards stack - partially, 2 at the moment
+- [ ] Cards stack - partially
 - [ ] ! Tap position detection - coordination for direction of rotation (initial and flying)
 - [x] Drag and move
 - [x] Throw and spin
 - [x] Slide down to highest
 - [ ]   New stack when fly - partially
-- [ ]   Velocity calculation
+- [x]   Velocity calculation
 - [ ]   ios test
 
