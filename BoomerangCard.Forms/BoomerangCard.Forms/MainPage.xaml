@@ -3,18 +3,11 @@
     x:Class="BoomerangCard.Forms.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:BoomerangCard.Forms"
     xmlns:effect="clr-namespace:BoomerangCard.Forms.Effect"
     BackgroundColor="Black">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <Style TargetType="BoxView">
-                <Setter Property="WidthRequest" Value="210" />
-                <Setter Property="HeightRequest" Value="140" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="CornerRadius" Value="12" />
-                <Setter Property="BackgroundColor" Value="#f3f3f3" />
-            </Style>
             <Style TargetType="Slider">
                 <Setter Property="BackgroundColor" Value="AliceBlue" />
                 <Setter Property="MaximumTrackColor" Value="Gray" />
@@ -28,52 +21,23 @@
             x:Name="gridbox"
             Margin="10,40"
             VerticalOptions="EndAndExpand">
-            <Grid
+            <controls:CardView
                 x:Name="card2"
                 Margin="0,0,0,20"
+                CardColor="#e5cd84"
                 Scale="0.95">
-                <Grid.Effects>
+                <controls:CardView.Effects>
                     <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
-                </Grid.Effects>
-                <BoxView Margin="0,0,0,0" BackgroundColor="#e5cd84" />
-                <BoxView
-                    WidthRequest="32"
-                    HeightRequest="32"
-                    Margin="0,60,120,0"
-                    CornerRadius="16" />
-                <BoxView
-                    WidthRequest="80"
-                    HeightRequest="12"
-                    Margin="0,40,0,0"
-                    CornerRadius="6" />
-                <BoxView
-                    WidthRequest="50"
-                    HeightRequest="12"
-                    Margin="0,80,30,0"
-                    CornerRadius="6" />
-            </Grid>
-
-            <Grid x:Name="card1">
-                <Grid.Effects>
+                </controls:CardView.Effects>
+            </controls:CardView>
+            <controls:CardView
+                x:Name="card1"
+                Margin="0,0,0,0"
+                CardColor="#a8c7ff">
+                <controls:CardView.Effects>
                     <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
-                </Grid.Effects>
-                <BoxView Margin="0,0,0,0" BackgroundColor="#a8c7ff" />
-                <BoxView
-                    WidthRequest="32"
-                    HeightRequest="32"
-                    Margin="0,60,120,0"
-                    CornerRadius="16" />
-                <BoxView
-                    WidthRequest="80"
-                    HeightRequest="12"
-                    Margin="0,40,0,0"
-                    CornerRadius="6" />
-                <BoxView
-                    WidthRequest="50"
-                    HeightRequest="12"
-                    Margin="0,80,30,0"
-                    CornerRadius="6" />
-            </Grid>
+                </controls:CardView.Effects>
+            </controls:CardView>
         </Grid>
 
         <Grid
