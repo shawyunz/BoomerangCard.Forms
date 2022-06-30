@@ -10,19 +10,24 @@ A [flutter demo from @Roaa94](https://github.com/Roaa94/flutter_cool_card_swiper
 
 
 <p align="center">
-	<img align="center" src=".\demo\v3.gif" width="340" />
+	<img align="center" src=".\demo\v4.gif" width="340" />
 </p>
+
+
+Demo script: Left - Right - Left higher - Left faster - Left fasterer - Backwards - Auto - Auto
+
 
 
 
 ## Tasks / Features
 
-- [ ] Cards stack - partially
-- [ ] ! Tap position detection - coordination for direction of rotation (initial and flying)
-- [x] Drag and move
-- [x] Throw and spin
-- [x] Slide down to highest
-- [ ]   New stack when fly - partially
-- [x]   Velocity calculation
+- [x]   Cards stack - v1, two cards
+- [x]   ! Tap position detection - v4, docs: [Invoking Events from Effects](https://docs.microsoft.com/en-gb/xamarin/xamarin-forms/app-fundamentals/effects/touch-tracking), sample: [TouchTrackingEffect](https://github.com/xamarin/xamarin-forms-samples/tree/e9792d200f56ef0260849b5ee16ed0b1c4de9352/Effects/TouchTrackingEffect)
+- [x]   Drag and move - replace PanGesture with TouchEffect in v4
+- [x]   Throw and spin - v2
+- [x]   Slide down to highest - v2
+- [x]   New stack when fly - v1, two cards
+- [x]   Velocity calculation - v3
+- [ ]   More cards in stack - four cards
 - [ ]   ios test
 
