@@ -3,7 +3,7 @@
     x:Class="BoomerangCard.Forms.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+    xmlns:effect="clr-namespace:BoomerangCard.Forms.Effect"
     BackgroundColor="Black">
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -32,9 +32,9 @@
                 x:Name="card2"
                 Margin="0,0,0,20"
                 Scale="0.95">
-                <Grid.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated" />
-                </Grid.GestureRecognizers>
+                <Grid.Effects>
+                    <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
+                </Grid.Effects>
                 <BoxView Margin="0,0,0,0" BackgroundColor="#e5cd84" />
                 <BoxView
                     WidthRequest="32"
@@ -54,11 +54,10 @@
             </Grid>
 
             <Grid x:Name="card1">
-                <Grid.GestureRecognizers>
-                    <PanGestureRecognizer PanUpdated="PanGestureRecognizer_PanUpdated" />
-                </Grid.GestureRecognizers>
+                <Grid.Effects>
+                    <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
+                </Grid.Effects>
                 <BoxView Margin="0,0,0,0" BackgroundColor="#a8c7ff" />
-
                 <BoxView
                     WidthRequest="32"
                     HeightRequest="32"
@@ -78,7 +77,6 @@
         </Grid>
 
         <Grid
-            WidthRequest="300"
             Padding="40,10"
             HorizontalOptions="FillAndExpand"
             BackgroundColor="White"

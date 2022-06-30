@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BoomerangCard.Forms.Effect;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
@@ -7,9 +8,13 @@ namespace BoomerangCard.Forms
 {
     public partial class MainPage : ContentPage
     {
+        private bool isBeingDragged;
         private bool isflying = false;
+        private bool isRightSide;
         private bool isTravelUp;
+        private Point pressPoint;
         private View topview;
+        private long touchId;
         private double travelDistance;
         private DateTime travelStart;
 
@@ -25,8 +30,12 @@ namespace BoomerangCard.Forms
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            LabelStatus.Text = "Status: Flying";
+            LabelY.Text = "Movement: ";
+
             await FlyBoomerang(AniSpins, AniHeight);
 
+            LabelStatus.Text = "Status:";
             isflying = false;
         }
 
@@ -38,7 +47,7 @@ namespace BoomerangCard.Forms
             var view1 = viewList[0];
             var view2 = viewList[1];
 
-            view1.RotateTo(spins * 360, 800);
+            view1.RotateTo(spins * (isRightSide ? -360 : 360), 800);
             view1.ScaleTo(0.95, 800);
 
             view2.ScaleTo(1, 200);
@@ -81,74 +90,94 @@ namespace BoomerangCard.Forms
             return (velocity < 0.5 ? 0 : (velocity > 1.5 ? 0.9 : ((velocity - 0.5) * 0.9))) + 0.1;
         }
 
-        private async void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
+        private async void OnTouchEffectAction(object sender, TouchActionEventArgs args)
         {
+            LabelStatus.Text = "Status: " + (isflying ? "Flying" : args.Type.ToString());
             if (isflying)
             {
                 return;
             }
 
-            if (topview == null)
+            switch (args.Type)
             {
-                topview = GetCardList()[0];
-            }
-
-            var offset = e.TotalY;
-            LabelStatus.Text = "Status: " + e.StatusType.ToString();
-            LabelY.Text = "Movement: " + Math.Round(e.TotalY, 1);
-
-            switch (e.StatusType)
-            {
-                case GestureStatus.Started:
-                    if (topview.Rotation != -10)
+                case TouchActionType.Pressed:
+                    if (!isBeingDragged)
                     {
-                        topview.Rotation = -10;
+                        if (topview == null)
+                        {
+                            topview = sender as View;
+                        }
+
+                        isBeingDragged = true;
+                        touchId = args.Id;
+                        pressPoint = args.Location;
+
+                        //Console.WriteLine("=================> coordination x -- " + pressPoint.X);
+                        //Console.WriteLine("=================> coordination y -- " + pressPoint.Y);
+
+                        isRightSide = (args.Location.X >= Application.Current.MainPage.Width / 2) ? true : false;
+
+                        var initAngle = isRightSide ? -10 : 10;
+                        if (topview.Rotation != initAngle)
+                        {
+                            topview.Rotation = initAngle;
+                        }
                     }
                     break;
 
-                case GestureStatus.Running:
-                    if (offset > 0)
+                case TouchActionType.Moved:
+                    if (isBeingDragged && touchId == args.Id)
                     {
+                        var offset = args.Location.Y - pressPoint.Y;
+                        LabelY.Text = "Movement: " + Math.Round(offset, 1);
+
+                        if (offset > 0)
+                        {
+                            travelDistance = 0;
+                            isTravelUp = false;
+                        }
+                        else
+                        {
+                            if (!isTravelUp)
+                            {
+                                travelStart = DateTime.Now;
+                                isTravelUp = true;
+                            }
+                            travelDistance -= offset;
+                        }
+
+                        topview.TranslationX += args.Location.X - pressPoint.X;
+                        topview.TranslationY += args.Location.Y - pressPoint.Y;
+                    }
+                    break;
+
+                case TouchActionType.Released:
+                    if (isBeingDragged && touchId == args.Id)
+                    {
+                        if (isTravelUp && topview.TranslationY < 0)
+                        {
+                            //have to throw higher than original position to fly
+                            var portion = GetFlyCapacity(travelDistance / (int)DateTime.Now.Subtract(travelStart).TotalMilliseconds);
+                            await FlyBoomerang((int)(10 * portion), travelDistance + 300 * portion + 100);
+                        }
+                        else if (topview.TranslationY > 100)
+                        {
+                            await FlyBoomerang(10, 450);
+                        }
+                        else
+                        {
+                            topview.TranslationX = 0;
+                            topview.TranslationY = 10;
+                        }
+
+                        topview.Rotation = 0;
+                        topview = null;
+
                         travelDistance = 0;
                         isTravelUp = false;
+                        isflying = false;
+                        isBeingDragged = false;
                     }
-                    else
-                    {
-                        if (!isTravelUp)
-                        {
-                            travelStart = DateTime.Now;
-                            isTravelUp = true;
-                        }
-                        travelDistance -= offset;
-                    }
-
-                    topview.TranslationX += e.TotalX;
-                    topview.TranslationY += offset;
-                    break;
-
-                case GestureStatus.Completed:
-                    if (isTravelUp && topview.TranslationY < 0)
-                    {
-                        //have to throw higher than original position to fly
-                        var portion = GetFlyCapacity(travelDistance / (int)DateTime.Now.Subtract(travelStart).TotalMilliseconds);
-                        await FlyBoomerang((int)(10 * portion), travelDistance + 300 * portion + 100);
-                    }
-                    else if (topview.TranslationY > 100)
-                    {
-                        await FlyBoomerang(10, 450);
-                    }
-                    else
-                    {
-                        topview.TranslationX = 0;
-                        topview.TranslationY = 10;
-                    }
-
-                    topview.Rotation = 0;
-                    topview = null;
-
-                    travelDistance = 0;
-                    isTravelUp = false;
-                    isflying = false;
                     break;
             }
         }
