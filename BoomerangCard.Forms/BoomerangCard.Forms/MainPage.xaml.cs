@@ -8,8 +8,10 @@ namespace BoomerangCard.Forms
     public partial class MainPage : ContentPage
     {
         private bool isflying = false;
-
+        private bool isTravelUp;
         private View topview;
+        private double travelDistance;
+        private DateTime travelStart;
 
         public MainPage()
         {
@@ -23,12 +25,12 @@ namespace BoomerangCard.Forms
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            await FlyBoomerang();
+            await FlyBoomerang(AniSpins, AniHeight);
 
             isflying = false;
         }
 
-        private async Task FlyBoomerang()
+        private async Task FlyBoomerang(int spins, double height)
         {
             isflying = true;
             var viewList = GetCardList();
@@ -36,13 +38,13 @@ namespace BoomerangCard.Forms
             var view1 = viewList[0];
             var view2 = viewList[1];
 
-            view1.RotateTo(AniSpins * 360, 800);
+            view1.RotateTo(spins * 360, 800);
             view1.ScaleTo(0.95, 800);
 
             view2.ScaleTo(1, 200);
             view2.TranslateTo(0, 10, 200);
 
-            await view1.TranslateTo(0, -AniHeight, 400, Easing.CubicOut);
+            await view1.TranslateTo(0, -height, 400, Easing.CubicOut);
             gridbox.LowerChild(view1);
             view1.Margin = new Thickness(0, 0, 0, 20);
             await view1.TranslateTo(0, 0, 400, Easing.CubicIn);
@@ -72,6 +74,13 @@ namespace BoomerangCard.Forms
             return cardList;
         }
 
+        private double GetFlyCapacity(double velocity)
+        {
+            // v < 0.5 means least spin, which is 1
+            // v > 1.5 means 100%
+            return (velocity < 0.5 ? 0 : (velocity > 1.5 ? 0.9 : ((velocity - 0.5) * 0.9))) + 0.1;
+        }
+
         private async void PanGestureRecognizer_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
             if (isflying)
@@ -98,22 +107,35 @@ namespace BoomerangCard.Forms
                     break;
 
                 case GestureStatus.Running:
+                    if (offset > 0)
+                    {
+                        travelDistance = 0;
+                        isTravelUp = false;
+                    }
+                    else
+                    {
+                        if (!isTravelUp)
+                        {
+                            travelStart = DateTime.Now;
+                            isTravelUp = true;
+                        }
+                        travelDistance -= offset;
+                    }
+
                     topview.TranslationX += e.TotalX;
                     topview.TranslationY += offset;
                     break;
 
                 case GestureStatus.Completed:
-                    if (topview.TranslationY < 0)
+                    if (isTravelUp && topview.TranslationY < 0)
                     {
-                        await FlyBoomerang();
+                        //have to throw higher than original position to fly
+                        var portion = GetFlyCapacity(travelDistance / (int)DateTime.Now.Subtract(travelStart).TotalMilliseconds);
+                        await FlyBoomerang((int)(10 * portion), travelDistance + 300 * portion + 100);
                     }
                     else if (topview.TranslationY > 100)
                     {
-                        AniHeight = 350;
-                        AniSpins = 6;
-                        await FlyBoomerang();
-                        AniHeight = 240;
-                        AniSpins = 1;
+                        await FlyBoomerang(10, 450);
                     }
                     else
                     {
@@ -124,6 +146,8 @@ namespace BoomerangCard.Forms
                     topview.Rotation = 0;
                     topview = null;
 
+                    travelDistance = 0;
+                    isTravelUp = false;
                     isflying = false;
                     break;
             }
