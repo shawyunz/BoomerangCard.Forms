@@ -24,7 +24,7 @@
             <controls:CardView
                 x:Name="card4"
                 Margin="0,0,0,60"
-                CardColor="#e5cd84"
+                CardColor="#FAE68C"
                 Scale="0.85">
                 <controls:CardView.Effects>
                     <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
@@ -33,7 +33,7 @@
             <controls:CardView
                 x:Name="card3"
                 Margin="0,0,0,40"
-                CardColor="#ff737f"
+                CardColor="#E69391"
                 Scale="0.90">
                 <controls:CardView.Effects>
                     <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
@@ -42,7 +42,7 @@
             <controls:CardView
                 x:Name="card2"
                 Margin="0,0,0,20"
-                CardColor="#e5cd84"
+                CardColor="#C0B6CF"
                 Scale="0.95">
                 <controls:CardView.Effects>
                     <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
@@ -51,7 +51,7 @@
             <controls:CardView
                 x:Name="card1"
                 Margin="0,0,0,0"
-                CardColor="#a8c7ff">
+                CardColor="#A5D1E8">
                 <controls:CardView.Effects>
                     <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
                 </controls:CardView.Effects>
