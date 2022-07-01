@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:BoomerangCard.Forms"
     xmlns:effect="clr-namespace:BoomerangCard.Forms.Effect"
+    x:Name="thispage"
     BackgroundColor="Black">
     <ContentPage.Resources>
         <ResourceDictionary>

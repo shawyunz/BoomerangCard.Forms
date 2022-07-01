@@ -28,6 +28,11 @@ Demo script: Left - Right - Left higher - Left faster - Left fasterer - Backward
 - [x]   Slide down to highest - v2
 - [x]   New stack when fly - v1, two cards
 - [x]   Velocity calculation - v3
-- [ ]   More cards in stack - four cards
+- [x]   More cards in stack - four cards - v5
 - [ ]   ios test
 
+
+
+## Challenge
+
+- [ ]   Fly the card with 11% power

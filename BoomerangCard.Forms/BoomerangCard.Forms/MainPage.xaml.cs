@@ -152,6 +152,12 @@ namespace BoomerangCard.Forms
                             var portion = GetFlyCapacity(velocity: _travelDistance / (int)DateTime.Now.Subtract(_travelStart).TotalMilliseconds);
                             LabelPower.Text = $"Power: {portion:0 %}";
                             await FlyBoomerang((int)(10 * portion), _travelDistance + 300 * portion + 100);
+                            //if (portion > 0.1)
+                            if (portion > 0.104 && portion < 0.115)
+                            {
+                                LabelStatus.Text = "Status: Congrats!! You did a 11% throw!";
+                                Shining();
+                            }
                         }
                         else if (_topview.TranslationY > 100)
                         {
@@ -175,6 +181,19 @@ namespace BoomerangCard.Forms
                     }
                     break;
             }
+        }
+
+        private async void Shining()
+        {
+            thispage.BackgroundColor = Color.FromHex("#E69391");
+            await Task.Delay(300);
+            thispage.BackgroundColor = Color.FromHex("#FAE68C");
+            await Task.Delay(300);
+            thispage.BackgroundColor = Color.FromHex("#93DB95");
+            await Task.Delay(300);
+            thispage.BackgroundColor = Color.FromHex("#A5D1E8");
+            await Task.Delay(300);
+            thispage.BackgroundColor = Color.FromHex("#C0B6CF");
         }
 
         private void Spinslider_ValueChanged(object sender, ValueChangedEventArgs e)
