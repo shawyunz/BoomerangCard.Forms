@@ -58,7 +58,7 @@ namespace BoomerangCard.Forms
             for (int i = 0; i < topCardIndex; i++)
             {
                 cardList[i].ScaleTo(cardList[i].Scale + 0.05, 200);
-                cardList[i].TranslateTo(0, 10, 200);
+                cardList[i].TranslateTo(0, 8, 200);
             }
 
             await viewFly.TranslateTo(0, -height, 400, Easing.CubicOut);
