@@ -1,6 +1,6 @@
 ﻿using BoomerangCard.Forms.Effect;
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -30,6 +30,11 @@ namespace BoomerangCard.Forms
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
+            if (isflying)
+            {
+                return;
+            }
+
             LabelStatus.Text = "Status: Flying";
             LabelY.Text = "Movement: ";
 
@@ -42,45 +47,32 @@ namespace BoomerangCard.Forms
         private async Task FlyBoomerang(int spins, double height)
         {
             isflying = true;
-            var viewList = GetCardList();
 
-            var view1 = viewList[0];
-            var view2 = viewList[1];
+            var cardList = gridbox.Children.Cast<CardView>().ToList();
+            var topCardIndex = cardList.Count - 1;
 
-            view1.RotateTo(spins * (isRightSide ? -360 : 360), 800);
-            view1.ScaleTo(0.95, 800);
+            //fly starts
+            var viewFly = cardList[topCardIndex];
+            viewFly.RotateTo(spins * (isRightSide ? -360 : 360), 800);
+            viewFly.ScaleTo(1 - 0.05 * topCardIndex, 800);
 
-            view2.ScaleTo(1, 200);
-            view2.TranslateTo(0, 10, 200);
-
-            await view1.TranslateTo(0, -height, 400, Easing.CubicOut);
-            gridbox.LowerChild(view1);
-            view1.Margin = new Thickness(0, 0, 0, 20);
-            await view1.TranslateTo(0, 0, 400, Easing.CubicIn);
-
-            view1.Rotation = 0;
-            view1.Scale = 0.95;
-            view2.Scale = 1;
-
-            //await Task.Delay(500);
-            //isflying = false;
-        }
-
-        private List<View> GetCardList()
-        {
-            var cardList = new List<View>();
-            if (card1.Scale == 1)
+            for (int i = 0; i < topCardIndex; i++)
             {
-                cardList.Add(card1);
-                cardList.Add(card2);
-            }
-            else
-            {
-                cardList.Add(card2);
-                cardList.Add(card1);
+                cardList[i].ScaleTo(cardList[i].Scale + 0.05, 200);
+                cardList[i].TranslateTo(0, 10, 200);
             }
 
-            return cardList;
+            await viewFly.TranslateTo(0, -height, 400, Easing.CubicOut);
+            gridbox.LowerChild(viewFly);
+            viewFly.Margin = new Thickness(0, 0, 0, 20 * topCardIndex);
+            await viewFly.TranslateTo(0, 0, 400, Easing.CubicIn);
+
+            //refresh positions when fly ends
+            for (int i = 0; i < topCardIndex; i++)
+            {
+                cardList[i].TranslationY = 0;
+                cardList[i].Margin = new Thickness(0, 0, 0, cardList[i].Margin.Bottom - 20);
+            }
         }
 
         private double GetFlyCapacity(double velocity)

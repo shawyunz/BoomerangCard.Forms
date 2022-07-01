@@ -17,7 +17,7 @@
     </ContentView.Resources>
 
     <Grid>
-        <BoxView BackgroundColor="{Binding CardBackgroundColor}" />
+        <BoxView BackgroundColor="{Binding CardColor}" />
         <BoxView
             WidthRequest="32"
             HeightRequest="32"

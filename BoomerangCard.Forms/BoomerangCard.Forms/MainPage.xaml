@@ -22,6 +22,24 @@
             Margin="10,40"
             VerticalOptions="EndAndExpand">
             <controls:CardView
+                x:Name="card4"
+                Margin="0,0,0,60"
+                CardColor="#e5cd84"
+                Scale="0.85">
+                <controls:CardView.Effects>
+                    <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
+                </controls:CardView.Effects>
+            </controls:CardView>
+            <controls:CardView
+                x:Name="card3"
+                Margin="0,0,0,40"
+                CardColor="#ff737f"
+                Scale="0.90">
+                <controls:CardView.Effects>
+                    <effect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
+                </controls:CardView.Effects>
+            </controls:CardView>
+            <controls:CardView
                 x:Name="card2"
                 Margin="0,0,0,20"
                 CardColor="#e5cd84"
