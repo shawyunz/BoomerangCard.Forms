@@ -68,6 +68,7 @@ namespace BoomerangCard.Forms
             await viewFly.TranslateTo(0, 0, 400, Easing.CubicIn);
 
             //refresh positions when fly ends
+            viewFly.Rotation = 0;
             for (int i = 0; i < topCardIndex; i++)
             {
                 cardList[i].TranslationY = 0;
@@ -171,7 +172,6 @@ namespace BoomerangCard.Forms
                         }
 
                         LabelPower.Text = $"Power: 00 %";
-                        _topview.Rotation = 0;
                         _topview = null;
 
                         _travelDistance = 0;
