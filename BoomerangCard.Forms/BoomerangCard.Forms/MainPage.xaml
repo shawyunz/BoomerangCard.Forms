@@ -5,8 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:BoomerangCard.Forms"
     xmlns:effect="clr-namespace:BoomerangCard.Forms.Effect"
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
     x:Name="thispage"
-    BackgroundColor="Black">
+    BackgroundColor="Black"
+    ios:Page.UseSafeArea="True">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Slider">
@@ -93,7 +95,8 @@
                 Grid.Column="2"
                 Maximum="400"
                 Minimum="100"
-                Value="{Binding AniHeight}" />
+                Value="{Binding AniHeight, Mode=TwoWay}"
+                ValueChanged="Spinslider_ValueChanged" />
             <Label
                 Grid.Row="2"
                 Grid.Column="1"
@@ -102,6 +105,7 @@
             <Button
                 Grid.Row="3"
                 Grid.ColumnSpan="3"
+                BackgroundColor="AliceBlue"
                 Text="Fly"
                 Clicked="Button_Clicked" />
 
