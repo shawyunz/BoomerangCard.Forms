@@ -35,11 +35,12 @@ namespace BoomerangCard.Forms
             }
 
             LabelStatus.Text = "Status: Flying";
-            LabelY.Text = "Movement: ";
+            LabelPower.Text = "Power: as below";
 
             await FlyBoomerang(AniSpins, AniHeight);
 
             LabelStatus.Text = "Status:";
+            LabelPower.Text = "Power: 00 %";
             _isflying = false;
         }
 
@@ -120,7 +121,7 @@ namespace BoomerangCard.Forms
                     if (_isBeingDragged && _touchId == args.Id)
                     {
                         var offset = args.Location.Y - _pressPoint.Y;
-                        LabelY.Text = "Movement: " + Math.Round(offset, 1);
+                        //LabelY.Text = "Movement: " + Math.Round(offset, 1);
 
                         if (offset > 0)
                         {
@@ -149,10 +150,12 @@ namespace BoomerangCard.Forms
                         {
                             //have to throw higher than original position to fly
                             var portion = GetFlyCapacity(velocity: _travelDistance / (int)DateTime.Now.Subtract(_travelStart).TotalMilliseconds);
+                            LabelPower.Text = $"Power: {portion:0 %}";
                             await FlyBoomerang((int)(10 * portion), _travelDistance + 300 * portion + 100);
                         }
                         else if (_topview.TranslationY > 100)
                         {
+                            LabelPower.Text = $"Power: 100 %";
                             await FlyBoomerang(10, 450);
                         }
                         else
@@ -161,6 +164,7 @@ namespace BoomerangCard.Forms
                             _topview.TranslationY = 0;
                         }
 
+                        LabelPower.Text = $"Power: 00 %";
                         _topview.Rotation = 0;
                         _topview = null;
 

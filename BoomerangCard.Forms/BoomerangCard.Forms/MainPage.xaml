@@ -106,9 +106,7 @@
 
             <StackLayout Grid.Row="0" Grid.ColumnSpan="3">
                 <Label x:Name="LabelStatus" Text="Status:" />
-                <Label x:Name="LabelY" Text="Offset:" />
-                <!--<Label x:Name="Labelx" Text="Position X:" />
-                <Label x:Name="Labely" Text="Position Y:" />-->
+                <Label x:Name="LabelPower" Text="Power: 00 %" />
             </StackLayout>
         </Grid>
     </StackLayout>
