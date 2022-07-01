@@ -158,7 +158,7 @@ namespace BoomerangCard.Forms
                         else
                         {
                             _topview.TranslationX = 0;
-                            _topview.TranslationY = 10;
+                            _topview.TranslationY = 0;
                         }
 
                         _topview.Rotation = 0;
