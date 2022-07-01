@@ -9,13 +9,12 @@ A [flutter demo from @Roaa94](https://github.com/Roaa94/flutter_cool_card_swiper
 ## Demo
 
 
-<p align="center">
-	<img align="center" src=".\demo\v4.gif" width="340" />
-</p>
 
+|                       Android                       |                        iOS                         |
+| :-------------------------------------------------: | :------------------------------------------------: |
+| <img alt="Android" src=".\demo\v6.gif" width="340"> | <img alt="iOS" src=".\demo\v6ios.gif" width="340"> |
 
 Demo script: Left - Right - Left higher - Left faster - Left fasterer - Backwards - Auto - Auto
-
 
 
 
@@ -29,7 +28,7 @@ Demo script: Left - Right - Left higher - Left faster - Left fasterer - Backward
 - [x]   New stack when fly - v1, two cards
 - [x]   Velocity calculation - v3
 - [x]   More cards in stack - four cards - v5
-- [ ]   ios test
+- [x]   ios test - v6
 
 
 
